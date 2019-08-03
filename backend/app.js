@@ -1,8 +1,10 @@
 const express = require("express");
+const path = require("path");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 
 const postRouter = require("./router/posts");
+const userRouter = require("./router/users");
 
 const app = express();
 
@@ -16,6 +18,7 @@ mongoose.connect("mongodb+srv://harsh:EoJiKTYGbRWHkqRo@cluster0-pnyfq.mongodb.ne
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended : false}));
+app.use("/images",express.static(path.join("backend/images")));
 
 app.use((req, res, next) => {
   res.setHeader(
@@ -33,5 +36,6 @@ app.use((req, res, next) => {
 });
 
 app.use("/posts",postRouter);
+app.use("/users",userRouter);
 
 module.exports = app;
